@@ -1,0 +1,104 @@
+---
+const pathName = Astro.url.pathname;
+
+const isEnPath = pathName === "/";
+const isEsPath = pathName === "/es";
+
+const languageImgPath = isEnPath
+    ? "/assets/language_flags/english.png"
+    : "/assets/language_flags/spanish.png";
+const languageImgAlt = isEnPath ? "English" : "Español";
+const languageLabel = isEnPath ? "EN" : "ES";
+---
+
+<header
+    class="fixed top-0 left-0 right-0 h-20 z-50 flex bg-[#080D0B]/60 backdrop-blur-xl items-center justify-between px-6 py-4"
+>
+    {/* Avengers Logo */}
+    <div class="flex items-center gap-4">
+        <img
+            src="/assets/logo.png"
+            alt="Avengers Doomsday"
+            class="h-12 w-auto"
+        />
+    </div>
+
+    <div
+        class="flex items-center gap-4 relative [&>button]:bg-[#3B6013]/20 [&>button]:border [&>button]:border-[#2F4027]/75 [&>button]:rounded-full [&>button]:h-12 [&>button]:flex [&>button]:items-center [&>button]:justify-center"
+        id="header-actions"
+    >
+        {/* Volume Button */}
+        <button id="volume-toggle" class="w-12">
+            <img src="/assets/icons/volume.svg" alt="Volume" class="w-5 h-5" />
+        </button>
+
+        {/* Language Dropdown Trigger */}
+        <button id="language-dropdown-trigger" class="px-4 gap-2">
+            <img
+                src={languageImgPath}
+                alt={languageImgAlt}
+                class="w-6 h-6 object-cover"
+            />
+            <span class="text-sm text-text font-semibold">{languageLabel}</span>
+        </button>
+
+        {/* Language Dropdown Content */}
+        <div
+            id="language-dropdown-content"
+            class="hidden flex-col absolute top-full mt-1 right-0 bg-[#111D0E] border border-[#2F4027]/75 backdrop-blur-xl p-2 gap-2 rounded-xl shadow-lg z-10 [&>a]:flex [&>a]:flex-row [&>a]:py-1 [&>a]:px-2 [&>a]:gap-2"
+        >
+            <a href="/">
+                <img
+                    src="/assets/language_flags/english.png"
+                    alt="English"
+                    class="w-6 h-6 object-cover"
+                />
+                <span class="text-sm text-text font-semibold">English</span>
+            </a>
+            <a href="/es">
+                <img
+                    src="/assets/language_flags/spanish.png"
+                    alt="Español"
+                    class="w-6 h-6 object-cover"
+                />
+                <span class="text-sm text-text font-semibold">Español</span>
+            </a>
+        </div>
+    </div>
+</header>
+
+<script>
+    const $ = document.querySelector.bind(document);
+
+    const volumeToggle = $("#volume-toggle");
+    let isMuted = false;
+
+    /* Volume Toggle */
+    volumeToggle?.addEventListener("click", () => {
+        isMuted = !isMuted;
+        const img = volumeToggle.querySelector("img");
+        if (img) {
+            img.src = isMuted
+                ? "/assets/icons/volume_off.svg"
+                : "/assets/icons/volume.svg";
+        }
+    });
+
+    /* Language Dropdown */
+    const trigger = $("#language-dropdown-trigger");
+    const content = $("#language-dropdown-content");
+
+    trigger?.addEventListener("click", (e) => {
+        e.stopPropagation();
+
+        const isHidden = content?.classList.contains("hidden");
+
+        content?.classList.toggle("hidden", !isHidden);
+        content?.classList.toggle("flex", isHidden);
+    });
+
+    document.addEventListener("click", () => {
+        content?.classList.add("hidden");
+        content?.classList.remove("flex");
+    });
+</script>

@@ -1,0 +1,67 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import Trailer from "../components/Trailer.astro";
+import Footer from "../components/Footer.astro";
+
+const trailers = [
+    {
+        id: 1,
+        videoId: "UiMg566PREA",
+        background: "trailer1_bg.jpg",
+        characters: [
+            { name: "Steve Rogers", image: "steve_rogers.png" },
+            { name: "Thor", image: "thor.png" },
+            { name: "Shuri", image: "shuri.png" },
+        ],
+    },
+    {
+        id: 2,
+        videoId: "1clWprLC5Ak",
+        background: "trailer2_bg.jpg",
+        characters: [
+            { name: "Professor X", image: "profesor_x.png" },
+            { name: "Magneto", image: "magneto.png" },
+            { name: "Cyclops", image: "cyclops.png" },
+        ],
+    },
+    {
+        id: 3,
+        videoId: "kH1XlwHQv9o",
+        background: "trailer3_bg.jpg",
+        characters: [
+            { name: "Namor", image: "namor.png" },
+            { name: "Namora", image: "namora.png" },
+        ],
+    },
+    {
+        id: 4,
+        videoId: "399Ez7WHK5s",
+        background: "trailer4_bg.jpg",
+        characters: [
+            { name: "Namor", image: "namor.png" },
+            { name: "Namora", image: "namora.png" },
+            { name: "M'Baku", image: "mbaku.png" },
+            { name: "Thing", image: "thing.png" },
+        ],
+    },
+];
+---
+
+<Layout lang="en">
+    <Hero lang="en" />
+
+    {
+        trailers.map((trailer) => (
+            <Trailer
+                id={trailer.id}
+                videoId={trailer.videoId}
+                background={trailer.background}
+                characters={trailer.characters}
+                lang="en"
+            />
+        ))
+    }
+
+    <Footer lang="en" />
+</Layout>
